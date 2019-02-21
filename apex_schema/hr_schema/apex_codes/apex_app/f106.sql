@@ -27,7 +27,7 @@ prompt APPLICATION 106 - Project_HR
 -- Application Export:
 --   Application:     106
 --   Name:            Project_HR
---   Date and Time:   14:13 Thursday February 21, 2019
+--   Date and Time:   14:54 Thursday February 21, 2019
 --   Exported By:     RND
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -36,11 +36,11 @@ prompt APPLICATION 106 - Project_HR
 --
 
 -- Application Statistics:
---   Pages:                      4
---     Items:                    4
---     Processes:                8
---     Regions:                  5
---     Buttons:                  6
+--   Pages:                      6
+--     Items:                    7
+--     Processes:               11
+--     Regions:                  7
+--     Buttons:                 11
 --     Dynamic Actions:          3
 --   Shared Components:
 --     Logic:
@@ -107,7 +107,7 @@ wwv_flow_api.create_flow(
 ,p_rejoin_existing_sessions=>'N'
 ,p_csv_encoding=>'Y'
 ,p_last_updated_by=>'RND'
-,p_last_upd_yyyymmddhh24miss=>'20190221141240'
+,p_last_upd_yyyymmddhh24miss=>'20190221145324'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_ui_type_name => null
 );
@@ -9117,6 +9117,294 @@ wwv_flow_api.create_page_process(
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_process_when=>'CREATE,SAVE,DELETE'
 ,p_process_when_type=>'REQUEST_IN_CONDITION'
+);
+end;
+/
+prompt --application/pages/page_00004
+begin
+wwv_flow_api.create_page(
+ p_id=>4
+,p_user_interface_id=>wwv_flow_api.id(5733510828061976)
+,p_name=>'Existing Countries'
+,p_page_mode=>'NORMAL'
+,p_step_title=>'Existing Countries'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_chained=>'Y'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_cache_mode=>'NOCACHE'
+,p_last_updated_by=>'RND'
+,p_last_upd_yyyymmddhh24miss=>'20190221145239'
+);
+wwv_flow_api.create_report_region(
+ p_id=>wwv_flow_api.id(5753501644307679)
+,p_name=>'Existing Countries'
+,p_template=>wwv_flow_api.id(5699923711061903)
+,p_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_component_template_options=>'#DEFAULT#:t-Report--altRowsDefault:t-Report--rowHighlight'
+,p_display_point=>'BODY'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select "COUNTRY_ID", ',
+'"COUNTRY_NAME",',
+'"REGION_ID"',
+'from "#OWNER#"."COUNTRIES" ',
+'  ',
+''))
+,p_source_type=>'NATIVE_SQL_REPORT'
+,p_ajax_enabled=>'N'
+,p_query_row_template=>wwv_flow_api.id(5709959778061907)
+,p_query_num_rows=>15
+,p_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_query_no_data_found=>'no data found'
+,p_query_num_rows_type=>'ROW_RANGES_IN_SELECT_LIST'
+,p_query_row_count_max=>500
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(5754211029307679)
+,p_query_column_id=>1
+,p_column_alias=>'COUNTRY_ID'
+,p_column_display_sequence=>1
+,p_column_link=>'f?p=#APP_ID#:5:#APP_SESSION#::::P5_COUNTRY_ID:#COUNTRY_ID#'
+,p_column_linktext=>'<img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="Edit">'
+,p_heading_alignment=>'LEFT'
+,p_ref_schema=>'RND'
+,p_ref_table_name=>'COUNTRIES'
+,p_ref_column_name=>'COUNTRY_ID'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(5754634971307681)
+,p_query_column_id=>2
+,p_column_alias=>'COUNTRY_NAME'
+,p_column_display_sequence=>2
+,p_column_heading=>'Country Name'
+,p_heading_alignment=>'LEFT'
+,p_ref_schema=>'RND'
+,p_ref_table_name=>'COUNTRIES'
+,p_ref_column_name=>'COUNTRY_NAME'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(5755085672307681)
+,p_query_column_id=>3
+,p_column_alias=>'REGION_ID'
+,p_column_display_sequence=>3
+,p_column_heading=>'Region Id'
+,p_heading_alignment=>'LEFT'
+,p_ref_schema=>'RND'
+,p_ref_table_name=>'COUNTRIES'
+,p_ref_column_name=>'REGION_ID'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(5756300109307681)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_api.id(5753501644307679)
+,p_button_name=>'CREATE'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(5722741716061920)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'REGION_TEMPLATE_CREATE'
+,p_button_redirect_url=>'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:5'
+,p_grid_new_grid=>false
+);
+end;
+/
+prompt --application/pages/page_00005
+begin
+wwv_flow_api.create_page(
+ p_id=>5
+,p_user_interface_id=>wwv_flow_api.id(5733510828061976)
+,p_name=>'Create Countries'
+,p_page_mode=>'NORMAL'
+,p_step_title=>'Create Countries'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_autocomplete_on_off=>'OFF'
+,p_javascript_code=>'var htmldb_delete_message=''"DELETE_CONFIRM_MSG"'';'
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_chained=>'Y'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_protection_level=>'C'
+,p_cache_mode=>'NOCACHE'
+,p_last_updated_by=>'RND'
+,p_last_upd_yyyymmddhh24miss=>'20190221145324'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(5747836369307670)
+,p_plug_name=>'Create Countries'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(5699923711061903)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_attribute_01=>'N'
+,p_attribute_02=>'TEXT'
+,p_attribute_03=>'Y'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(5748362481307670)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_api.id(5747836369307670)
+,p_button_name=>'SAVE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(5722741716061920)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Apply Changes'
+,p_button_position=>'REGION_TEMPLATE_CHANGE'
+,p_button_condition=>'P5_COUNTRY_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_grid_new_grid=>false
+,p_database_action=>'UPDATE'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(5748539770307670)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_api.id(5747836369307670)
+,p_button_name=>'CANCEL'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(5722741716061920)
+,p_button_image_alt=>'Cancel'
+,p_button_position=>'REGION_TEMPLATE_CLOSE'
+,p_button_redirect_url=>'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:::'
+,p_grid_new_grid=>false
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(5748231426307670)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_api.id(5747836369307670)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(5722741716061920)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'REGION_TEMPLATE_CREATE'
+,p_button_condition=>'P5_COUNTRY_ID'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_grid_new_grid=>false
+,p_database_action=>'INSERT'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(5748428847307670)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_api.id(5747836369307670)
+,p_button_name=>'DELETE'
+,p_button_action=>'REDIRECT_URL'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(5722741716061920)
+,p_button_image_alt=>'Delete'
+,p_button_position=>'REGION_TEMPLATE_DELETE'
+,p_button_redirect_url=>'javascript:apex.confirm(htmldb_delete_message,''DELETE'');'
+,p_button_execute_validations=>'N'
+,p_button_condition=>'P5_COUNTRY_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_grid_new_grid=>false
+,p_database_action=>'DELETE'
+);
+wwv_flow_api.create_page_branch(
+ p_id=>wwv_flow_api.id(5750000538307673)
+,p_branch_action=>'f?p=&APP_ID.:4:&SESSION.&success_msg=#SUCCESS_MSG#'
+,p_branch_point=>'AFTER_PROCESSING'
+,p_branch_type=>'REDIRECT_URL'
+,p_branch_sequence=>1
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(5750433670307678)
+,p_name=>'P5_COUNTRY_ID'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_api.id(5747836369307670)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Country Id'
+,p_source=>'COUNTRY_ID'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_label_alignment=>'RIGHT'
+,p_field_template=>wwv_flow_api.id(5722248670061912)
+,p_item_template_options=>'#DEFAULT#'
+,p_protection_level=>'S'
+,p_attribute_01=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(5750883112307678)
+,p_name=>'P5_COUNTRY_NAME'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_api.id(5747836369307670)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Country Name'
+,p_source=>'COUNTRY_NAME'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>40
+,p_label_alignment=>'RIGHT'
+,p_field_template=>wwv_flow_api.id(5722248670061912)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_03=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'NONE'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(5751287787307678)
+,p_name=>'P5_REGION_ID'
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_api.id(5747836369307670)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Region Id'
+,p_source=>'REGION_ID'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>wwv_flow_api.id(5722248670061912)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_03=>'right'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(5752028576307678)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_HEADER'
+,p_process_type=>'NATIVE_FORM_FETCH'
+,p_process_name=>'Fetch Row from COUNTRIES'
+,p_attribute_02=>'COUNTRIES'
+,p_attribute_03=>'P5_COUNTRY_ID'
+,p_attribute_04=>'COUNTRY_ID'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(5752486311307678)
+,p_process_sequence=>30
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_FORM_PROCESS'
+,p_process_name=>'Process Row of COUNTRIES'
+,p_attribute_02=>'COUNTRIES'
+,p_attribute_03=>'P5_COUNTRY_ID'
+,p_attribute_04=>'COUNTRY_ID'
+,p_attribute_11=>'I:U:D'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_success_message=>'Action Processed.'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(5752895402307678)
+,p_process_sequence=>40
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_SESSION_STATE'
+,p_process_name=>'reset page'
+,p_attribute_01=>'CLEAR_CACHE_CURRENT_PAGE'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_api.id(5748428847307670)
 );
 end;
 /
